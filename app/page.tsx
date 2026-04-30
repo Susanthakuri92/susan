@@ -153,7 +153,7 @@ export default function Home() {
           >
             <div className={`w-3 h-3 rounded-full transition-colors duration-300 ${solarSystemActive ? 'bg-indigo-400 shadow-[0_0_10px_rgba(129,140,248,0.5)]' : 'bg-white/30'}`} />
             <span className="text-white/70 text-sm font-medium group-hover:text-white/90 transition-colors">
-              {solarSystemActive ? 'Pause' : 'Resume'}
+              {solarSystemActive ? 'Halt the Cosmos' : 'Awaken the Cosmos'}
             </span>
           </button>
         </header>

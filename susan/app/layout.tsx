@@ -13,8 +13,15 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "My Portfolio",
-  description: "A showcase of my projects and work",
+  title: "Susan Thakuri | Full Stack Developer",
+  description: "Portfolio of Susan Thakuri, a passionate full-stack developer specializing in React, Next.js, and modern web technologies. Building beautiful, responsive web applications.",
+  keywords: ["Full Stack Developer", "React", "Next.js", "TypeScript", "Web Development", "Portfolio"],
+  authors: [{ name: "Susan Thakuri" }],
+  openGraph: {
+    title: "Susan Thakuri | Full Stack Developer",
+    description: "Portfolio of Susan Thakuri, a passionate full-stack developer specializing in React, Next.js, and modern web technologies.",
+    type: "website",
+  },
 };
 
 export default function RootLayout({

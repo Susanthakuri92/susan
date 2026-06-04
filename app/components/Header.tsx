@@ -48,7 +48,7 @@ export default function Header({ sections, activeSection, isScrolled, isMenuOpen
         {sections.map((section) => (
           <button
             key={section}
-            onClick={() => { setDisableActive(true); onSectionClick(section); setTimeout(() => setDisableActive(false), 300); }}
+            onClick={() => onSectionClick(section)}
             className="text-[10px] uppercase tracking-[0.2em] transition-all relative py-2 group font-mono"
             style={{ color: activeSection === section ? 'var(--accent)' : 'var(--fg-muted)' }}
           >

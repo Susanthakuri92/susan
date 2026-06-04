@@ -78,9 +78,9 @@ export default function Starfield() {
 
     const generatePlanets = (w: number, h: number) => {
       const isMobile = w < 768;
-      const cx = isMobile ? w * 0.85 : w * 0.7;
-      const cy = isMobile ? h * 0.35 : h * 0.4;
-      const maxR = Math.min(w, h) * (isMobile ? 0.22 : 0.35);
+      const cx = isMobile ? w * 0.9 : w * 0.7;
+      const cy = isMobile ? h * 0.3 : h * 0.4;
+      const maxR = Math.min(w, h) * (isMobile ? 0.12 : 0.35);
 
       return [
         { name: 'mercury', orbitRx: maxR * 0.18, orbitRy: maxR * 0.12, speed: 0.45, phase: 0, size: 2, color: '#a09a94', label: '' },
@@ -130,8 +130,8 @@ export default function Starfield() {
       const w = canvas.width / dpr;
       const h = canvas.height / dpr;
       const t = timestamp / 1000;
-      solarCxRef.current = w < 768 ? w * 0.85 : w * 0.7;
-      solarCyRef.current = w < 768 ? h * 0.35 : h * 0.4;
+      solarCxRef.current = w < 768 ? w * 0.9 : w * 0.7;
+      solarCyRef.current = w < 768 ? h * 0.3 : h * 0.4;
 
       ctx.clearRect(0, 0, w, h);
 
@@ -152,14 +152,17 @@ export default function Starfield() {
       const cy = solarCyRef.current;
       const precession = t * 0.004 + Math.PI / 5;
 
-      // Orbit rings
-      ctx.font = '9px monospace';
-      for (const p of planetsRef.current) {
-        ctx.strokeStyle = `rgba(255, 255, 255, 0.08)`;
-        ctx.lineWidth = 0.5;
-        ctx.beginPath();
-        ctx.ellipse(cx, cy, p.orbitRx, p.orbitRy, precession, 0, Math.PI * 2);
-        ctx.stroke();
+      // Orbit rings (hidden on mobile to reduce clutter)
+      if (w >= 768) {
+        ctx.font = '9px monospace';
+        for (const p of planetsRef.current) {
+          ctx.strokeStyle = `rgba(255, 255, 255, 0.08)`;
+          ctx.lineWidth = 0.5;
+          ctx.beginPath();
+          ctx.ellipse(cx, cy, p.orbitRx, p.orbitRy, precession, 0, Math.PI * 2);
+          ctx.stroke();
+        }
+      }
 
         // Planet position
         const angle = t * p.speed + p.phase;

@@ -150,7 +150,7 @@ export default function Starfield() {
 
       const cx = solarCxRef.current;
       const cy = solarCyRef.current;
-      const precession = t * 0.004 + Math.PI / 5;
+      const precession = t * 0.004 + (w < 768 ? -Math.PI / 4 : Math.PI / 5);
 
       // Orbit rings (hidden on mobile to reduce clutter)
       if (w >= 768) {
@@ -219,37 +219,38 @@ export default function Starfield() {
       }
 
       // Sun - outer corona glow
-      const coronaGrad = ctx.createRadialGradient(cx, cy, 0, cx, cy, 80);
+      const sunScale = w < 768 ? 0.5 : 1;
+      const coronaGrad = ctx.createRadialGradient(cx, cy, 0, cx, cy, 80 * sunScale);
       coronaGrad.addColorStop(0, 'rgba(255, 200, 130, 0.3)');
       coronaGrad.addColorStop(0.3, 'rgba(255, 180, 100, 0.12)');
       coronaGrad.addColorStop(0.6, 'rgba(255, 160, 80, 0.04)');
       coronaGrad.addColorStop(1, 'rgba(255, 160, 80, 0)');
       ctx.fillStyle = coronaGrad;
       ctx.beginPath();
-      ctx.arc(cx, cy, 80, 0, Math.PI * 2);
+      ctx.arc(cx, cy, 80 * sunScale, 0, Math.PI * 2);
       ctx.fill();
 
       // Sun - inner glow
-      const innerGrad = ctx.createRadialGradient(cx, cy, 0, cx, cy, 40);
+      const innerGrad = ctx.createRadialGradient(cx, cy, 0, cx, cy, 40 * sunScale);
       innerGrad.addColorStop(0, 'rgba(255, 220, 150, 0.8)');
       innerGrad.addColorStop(0.4, 'rgba(255, 190, 110, 0.35)');
       innerGrad.addColorStop(1, 'rgba(255, 170, 90, 0)');
       ctx.fillStyle = innerGrad;
       ctx.beginPath();
-      ctx.arc(cx, cy, 40, 0, Math.PI * 2);
+      ctx.arc(cx, cy, 40 * sunScale, 0, Math.PI * 2);
       ctx.fill();
 
       // Sun - core
-      const coreGrad = ctx.createRadialGradient(cx, cy, 0, cx, cy, 18);
+      const coreGrad = ctx.createRadialGradient(cx, cy, 0, cx, cy, 18 * sunScale);
       coreGrad.addColorStop(0, 'rgba(255, 230, 190, 0.9)');
       coreGrad.addColorStop(0.5, 'rgba(255, 210, 150, 0.7)');
       coreGrad.addColorStop(1, 'rgba(255, 180, 100, 0.4)');
       ctx.fillStyle = coreGrad;
       ctx.beginPath();
-      ctx.arc(cx, cy, 18, 0, Math.PI * 2);
+      ctx.arc(cx, cy, 18 * sunScale, 0, Math.PI * 2);
       ctx.fill();
       ctx.beginPath();
-      ctx.arc(cx, cy, 18, 0, Math.PI * 2);
+      ctx.arc(cx, cy, 18 * sunScale, 0, Math.PI * 2);
       ctx.fill();
 
       // Shooting stars

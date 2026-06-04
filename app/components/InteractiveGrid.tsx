@@ -78,7 +78,7 @@ export default function Starfield() {
 
     const generatePlanets = (w: number, h: number) => {
       const isMobile = w < 768;
-      const cx = isMobile ? w : w * 0.7;
+      const cx = isMobile ? w * 0.85 : w * 0.7;
       const cy = isMobile ? h * 0.35 : h * 0.4;
       const maxR = Math.min(w, h) * (isMobile ? 0.22 : 0.35);
 
@@ -130,7 +130,7 @@ export default function Starfield() {
       const w = canvas.width / dpr;
       const h = canvas.height / dpr;
       const t = timestamp / 1000;
-      solarCxRef.current = w < 768 ? w : w * 0.7;
+      solarCxRef.current = w < 768 ? w * 0.85 : w * 0.7;
       solarCyRef.current = w < 768 ? h * 0.35 : h * 0.4;
 
       ctx.clearRect(0, 0, w, h);

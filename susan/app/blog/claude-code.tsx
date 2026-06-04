@@ -2,7 +2,7 @@ import React from 'react';
 
 export default function ClaudeCodePost() {
   return (
-    <article className="max-w-3xl mx-auto px-6 py-20 leading-relaxed" style={{ color: 'var(--fg-muted)' }}>
+    <article className="max-w-3xl mx-auto px-6 py-12 md:py-20 leading-relaxed" style={{ color: 'var(--fg-muted)' }}>
       <h1 className="text-4xl md:text-5xl font-bold mb-4 tracking-tighter" style={{ color: 'var(--fg)' }}>Using Claude Code for Free</h1>
       <p className="font-mono text-sm mb-12" style={{ color: 'var(--fg-dim)' }}>Published on 2026-05-04</p>
 

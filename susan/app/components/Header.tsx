@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import ThemeToggle from './ThemeToggle';
 
 interface HeaderProps {
   sections: string[];
@@ -59,11 +58,9 @@ export default function Header({ sections, activeSection, isScrolled, isMenuOpen
             }`} style={{ backgroundColor: 'var(--accent)' }} />
           </button>
         ))}
-        <ThemeToggle />
       </nav>
 
       <div className="md:hidden flex items-center gap-3">
-        <ThemeToggle />
         <button
           className="flex flex-col justify-center items-center w-8 h-8 gap-1.5 group z-[110]"
           onClick={onMenuClick}

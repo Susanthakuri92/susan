@@ -3,19 +3,16 @@
 import { SECTIONS, PROJECTS, EXPERIENCE, SKILLS, SERVICES, POSTS } from './constants';
 import Header from './components/Header';
 import MobileMenu from './components/MobileMenu';
+import InteractiveGrid from './components/InteractiveGrid';
 import { useState, useEffect } from 'react';
+import Link from 'next/link';
 
 export default function Home() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState('about');
 
   useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
-    };
-
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
 
@@ -34,14 +31,12 @@ export default function Home() {
       }
     };
 
-    window.addEventListener('mousemove', handleMouseMove);
     window.addEventListener('scroll', handleScroll, { passive: true });
 
     // Initial check
     handleScroll();
 
     return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('scroll', handleScroll);
     };
   }, []);
@@ -57,19 +52,11 @@ export default function Home() {
   return (
     <div className="min-h-screen relative" style={{ color: 'var(--fg)' }}>
       {/* Background Elements */}
-      <div className="graph-bg" />
+      <InteractiveGrid />
       <div className="axis-x" />
       <div className="axis-y" />
       <div className="wire-circle" />
       <div className="wire-square" />
-
-      {/* Mouse Glow */}
-      <div
-        className="mouse-glow"
-        style={{
-          background: `radial-gradient(600px circle at ${mousePosition.x}px ${mousePosition.y}px, var(--accent-glow), transparent 80%)`
-        }}
-      />
 
       <Header
         sections={SECTIONS}
@@ -87,7 +74,7 @@ export default function Home() {
         onClose={() => setIsMobileMenuOpen(false)}
       />
 
-      <main className="max-w-5xl mx-auto px-6 md:px-12 pt-32 md:pt-48 pb-32">
+      <main className="max-w-5xl mx-auto px-6 md:px-12 pt-28 md:pt-48 pb-24 md:pb-32">
         {/* HERO */}
         <section id="about" className="min-h-[60vh] flex flex-col justify-center mb-32 relative z-10">
           <div className="border-grid-l pl-8 md:pl-12 py-4 relative">
@@ -115,7 +102,7 @@ export default function Home() {
 
 
         {/* BLOG */}
-        <section id="blog" className="mb-32 relative z-10 backdrop-blur-[2px]" style={{ backgroundColor: 'color-mix(in srgb, var(--bg) 40%, transparent)' }}>
+        <section id="blog" className="mb-20 md:mb-32 relative z-10 backdrop-blur-[2px]" style={{ backgroundColor: 'color-mix(in srgb, var(--bg) 40%, transparent)' }}>
           <div className="flex items-center gap-4 mb-12">
             <div className="w-12 h-px" style={{ backgroundColor: 'var(--border)' }} />
             <h2 className="text-sm font-mono uppercase tracking-widest m-0" style={{ color: 'var(--fg-dim)' }}>Log / Guides</h2>
@@ -143,7 +130,7 @@ export default function Home() {
         </section>
 
         {/* SERVICES / WHAT I DO */}
-        <section className="mb-32 relative z-10 backdrop-blur-[2px]" style={{ backgroundColor: 'color-mix(in srgb, var(--bg) 40%, transparent)' }}>
+        <section className="mb-20 md:mb-32 relative z-10 backdrop-blur-[2px]" style={{ backgroundColor: 'color-mix(in srgb, var(--bg) 40%, transparent)' }}>
           <div className="flex items-center gap-4 mb-12">
             <div className="w-12 h-px" style={{ backgroundColor: 'var(--border)' }} />
             <h2 className="text-sm font-mono uppercase tracking-widest m-0" style={{ color: 'var(--fg-dim)' }}>What I Do</h2>
@@ -166,7 +153,7 @@ export default function Home() {
         </section>
 
         {/* WORK / PROJECTS */}
-        <section id="work" className="mb-32 relative z-10 backdrop-blur-[2px]" style={{ backgroundColor: 'color-mix(in srgb, var(--bg) 40%, transparent)' }}>
+        <section id="work" className="mb-20 md:mb-32 relative z-10 backdrop-blur-[2px]" style={{ backgroundColor: 'color-mix(in srgb, var(--bg) 40%, transparent)' }}>
           <div className="flex items-center gap-4 mb-12">
             <div className="w-12 h-px" style={{ backgroundColor: 'var(--border)' }} />
             <h2 className="text-sm font-mono uppercase tracking-widest m-0" style={{ color: 'var(--fg-dim)' }}>Selected Work</h2>
@@ -196,19 +183,19 @@ export default function Home() {
         </section>
 
         {/* EXPERIENCE & STACK */}
-        <section id="stack" className="mb-32 grid md:grid-cols-2 gap-16 md:gap-24 relative z-10 backdrop-blur-[2px]" style={{ backgroundColor: 'color-mix(in srgb, var(--bg) 40%, transparent)' }}>
+        <section id="stack" className="mb-20 md:mb-32 grid md:grid-cols-2 gap-12 md:gap-24 relative z-10 backdrop-blur-[2px]" style={{ backgroundColor: 'color-mix(in srgb, var(--bg) 40%, transparent)' }}>
           <div>
             <div className="flex items-center gap-4 mb-12">
               <div className="w-8 h-px" style={{ backgroundColor: 'var(--border)' }} />
               <h2 className="text-sm font-mono uppercase tracking-widest m-0" style={{ color: 'var(--fg-dim)' }}>Experience</h2>
               <div className="flex-1 h-px" style={{ backgroundColor: 'var(--border)' }} />
             </div>
-            <div className="space-y-12 border-grid-l pl-8 relative">
+            <div className="space-y-8 md:space-y-12 border-grid-l pl-6 md:pl-8 relative">
               <div className="crosshair crosshair-tl" />
               <div className="crosshair crosshair-bl" />
               {EXPERIENCE.map((exp, i) => (
                 <div key={i} className="relative">
-                  <div className="absolute w-2 h-2 -left-[37px] top-2" style={{ border: '1px solid var(--accent)', backgroundColor: 'var(--bg)' }} />
+                  <div className="absolute w-2 h-2 -left-[25px] md:-left-[37px] top-2" style={{ border: '1px solid var(--accent)', backgroundColor: 'var(--bg)' }} />
                   <span className="text-xs font-mono mb-2 block" style={{ color: 'var(--fg-dim)' }}>{exp.period}</span>
                   <h3 className="text-lg font-bold mb-1">{exp.title}</h3>
                   <p className="text-sm mb-3" style={{ color: 'var(--fg-muted)' }}>{exp.company}</p>
@@ -258,9 +245,9 @@ export default function Home() {
               <a href="mailto:susanthakuri92@gmail.com" className="inline-block font-bold px-8 py-4 transition-all duration-300 text-center" style={{ border: '1px solid var(--btn-border)', color: 'var(--btn-text)' }}>
                 Get In Touch
               </a>
-              <a href="/susan-cv.pdf" download className="inline-block font-bold px-8 py-4 transition-all duration-300 text-center" style={{ border: '1px solid var(--btn-border)', color: 'var(--btn-text)' }}>
-                Download CV
-              </a>
+              <Link href="/cv" className="inline-block font-bold px-8 py-4 transition-all duration-300 text-center" style={{ border: '1px solid var(--btn-border)', color: 'var(--btn-text)' }}>
+                View CV
+              </Link>
             </div>
           </div>
 

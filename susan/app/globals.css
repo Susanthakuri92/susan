@@ -1,55 +1,29 @@
 @import "tailwindcss";
 
 :root {
-  --bg: #0f0d0b;
-  --fg: #f0ebe2;
-  --fg-muted: #bab1a6;
-  --fg-dim: #8a8277;
-  --fg-faint: #5e5750;
-  --accent: #f07b68;
-  --accent-glow: rgba(240, 123, 104, 0.15);
-  --accent-soft: rgba(240, 123, 104, 0.08);
-  --grid: rgba(240, 123, 104, 0.05);
-  --border: rgba(255, 245, 235, 0.1);
-  --wire: rgba(255, 245, 235, 0.12);
-  --wire-faint: rgba(255, 245, 235, 0.06);
-  --wire-accent: rgba(240, 123, 104, 0.28);
-  --surface: rgba(255, 245, 235, 0.03);
-  --header-bg: rgba(15, 13, 11, 0.9);
-  --header-shadow: rgba(0, 0, 0, 0.4);
-  --card-border: rgba(255, 245, 235, 0.1);
-  --code-bg: #1a1714;
-  --code-border: #2c2722;
-  --btn-border: #f0ebe2;
-  --btn-text: #f0ebe2;
-  --btn-hover-bg: #f0ebe2;
-  --btn-hover-text: #0f0d0b;
-}
-
-[data-theme="light"] {
-  --bg: #faf7f2;
-  --fg: #1f1a16;
-  --fg-muted: #6b5f55;
-  --fg-dim: #958b80;
-  --fg-faint: #c4bbb0;
-  --accent: #d46853;
-  --accent-glow: rgba(212, 104, 83, 0.1);
-  --accent-soft: rgba(212, 104, 83, 0.06);
-  --grid: rgba(180, 120, 80, 0.07);
-  --border: rgba(100, 70, 40, 0.14);
-  --wire: rgba(100, 70, 40, 0.1);
-  --wire-faint: rgba(100, 70, 40, 0.05);
-  --wire-accent: rgba(212, 104, 83, 0.2);
-  --surface: rgba(180, 130, 90, 0.04);
-  --header-bg: rgba(250, 247, 242, 0.94);
-  --header-shadow: rgba(80, 40, 20, 0.08);
-  --card-border: rgba(100, 70, 40, 0.14);
-  --code-bg: #f2ede6;
-  --code-border: #e0d8cf;
-  --btn-border: #1f1a16;
-  --btn-text: #1f1a16;
-  --btn-hover-bg: #1f1a16;
-  --btn-hover-text: #faf7f2;
+  --bg: #0b0e17;
+  --fg: #e2e6ef;
+  --fg-muted: #9ca3b8;
+  --fg-dim: #6b738a;
+  --fg-faint: #424a5e;
+  --accent: #e8735a;
+  --accent-glow: rgba(232, 115, 90, 0.2);
+  --accent-soft: rgba(232, 115, 90, 0.1);
+  --grid: rgba(232, 115, 90, 0.6);
+  --border: rgba(255, 255, 255, 0.08);
+  --wire: rgba(255, 255, 255, 0.1);
+  --wire-faint: rgba(255, 255, 255, 0.05);
+  --wire-accent: rgba(232, 115, 90, 0.3);
+  --surface: rgba(255, 255, 255, 0.03);
+  --header-bg: rgba(11, 14, 23, 0.92);
+  --header-shadow: rgba(0, 0, 0, 0.5);
+  --card-border: rgba(255, 255, 255, 0.08);
+  --code-bg: #151a26;
+  --code-border: #222838;
+  --btn-border: #e2e6ef;
+  --btn-text: #e2e6ef;
+  --btn-hover-bg: #e2e6ef;
+  --btn-hover-text: #0b0e17;
 }
 
 body {
@@ -58,7 +32,6 @@ body {
   font-family: var(--font-geist-sans), sans-serif;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
-  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 ::selection {
@@ -98,8 +71,8 @@ body {
 
 .wire-circle {
   position: fixed;
-  top: 15%;
-  right: 10%;
+  top: 5%;
+  left: 5%;
   width: 40vw;
   max-width: 500px;
   aspect-ratio: 1 / 1;
@@ -223,4 +196,30 @@ body {
 /* Accent glow utility */
 .accent-glow {
   box-shadow: 0 0 30px var(--accent-glow);
+}
+
+/* Mobile adjustments */
+@media (max-width: 640px) {
+  .wire-circle {
+    width: 50vw;
+    max-width: 200px;
+    top: 2%;
+    left: 2%;
+  }
+  .wire-circle::before {
+    inset: 10px;
+  }
+  .wire-circle::after {
+    left: -10px;
+    right: -10px;
+  }
+  .wire-square {
+    width: 30vw;
+    max-width: 120px;
+    bottom: 5%;
+    left: 5%;
+  }
+  .wire-square::before {
+    inset: -5px;
+  }
 }

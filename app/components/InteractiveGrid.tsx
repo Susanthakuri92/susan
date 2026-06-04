@@ -78,9 +78,9 @@ export default function Starfield() {
 
     const generatePlanets = (w: number, h: number) => {
       const isMobile = w < 768;
-      const cx = isMobile ? w * 0.55 : w * 0.7;
-      const cy = isMobile ? h * 0.25 : h * 0.4;
-      const maxR = Math.min(w, h) * (isMobile ? 0.25 : 0.35);
+      const cx = isMobile ? w * 0.5 : w * 0.7;
+      const cy = isMobile ? h * 0.35 : h * 0.4;
+      const maxR = Math.min(w, h) * (isMobile ? 0.22 : 0.35);
 
       return [
         { name: 'mercury', orbitRx: maxR * 0.18, orbitRy: maxR * 0.12, speed: 0.45, phase: 0, size: 2, color: '#b5b5b5', label: '' },
@@ -130,8 +130,8 @@ export default function Starfield() {
       const w = canvas.width / dpr;
       const h = canvas.height / dpr;
       const t = timestamp / 1000;
-      solarCxRef.current = w < 768 ? w * 0.55 : w * 0.7;
-      solarCyRef.current = w < 768 ? h * 0.25 : h * 0.4;
+      solarCxRef.current = w < 768 ? w * 0.5 : w * 0.7;
+      solarCyRef.current = w < 768 ? h * 0.35 : h * 0.4;
 
       ctx.clearRect(0, 0, w, h);
 

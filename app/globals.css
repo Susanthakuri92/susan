@@ -11,8 +11,6 @@
   --accent-soft: rgba(232, 115, 90, 0.1);
   --grid: rgba(232, 115, 90, 0.6);
   --border: rgba(255, 255, 255, 0.08);
-  --wire: rgba(255, 255, 255, 0.1);
-  --wire-faint: rgba(255, 255, 255, 0.05);
   --wire-accent: rgba(232, 115, 90, 0.3);
   --surface: rgba(255, 255, 255, 0.03);
   --header-bg: rgba(11, 14, 23, 0.92);
@@ -48,82 +46,6 @@ body {
   background-size: 32px 32px;
 }
 
-/* Geometric wireframes */
-.axis-x {
-  position: fixed;
-  top: 50%;
-  left: 0;
-  width: 100%;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--border), transparent);
-  z-index: -2;
-}
-
-.axis-y {
-  position: fixed;
-  left: 50%;
-  top: 0;
-  width: 1px;
-  height: 100%;
-  background: linear-gradient(180deg, transparent, var(--border), transparent);
-  z-index: -2;
-}
-
-.wire-circle {
-  position: fixed;
-  top: 5%;
-  left: 5%;
-  width: 40vw;
-  max-width: 500px;
-  aspect-ratio: 1 / 1;
-  border: 1px dashed var(--wire);
-  border-radius: 50%;
-  z-index: -2;
-  animation: spin 60s linear infinite;
-}
-.wire-circle::before {
-  content: '';
-  position: absolute;
-  inset: 20px;
-  border: 1px solid var(--wire-faint);
-  border-radius: 50%;
-}
-.wire-circle::after {
-  content: '';
-  position: absolute;
-  top: 50%; left: -20px; right: -20px; height: 1px;
-  background: var(--wire-faint);
-}
-
-.wire-square {
-  position: fixed;
-  bottom: 10%;
-  left: 10%;
-  width: 30vw;
-  max-width: 300px;
-  aspect-ratio: 1 / 1;
-  border: 1px solid var(--wire-faint);
-  z-index: -2;
-  transform: rotate(15deg);
-  animation: float-slow 20s ease-in-out infinite;
-}
-.wire-square::before {
-  content: '';
-  position: absolute;
-  inset: -10px;
-  border: 1px dashed var(--wire-accent);
-}
-
-@keyframes spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-
-@keyframes float-slow {
-  0%, 100% { transform: translateY(0) rotate(15deg); }
-  50% { transform: translateY(-30px) rotate(20deg); }
-}
-
 /* Mouse glow */
 .mouse-glow {
   position: fixed;
@@ -143,15 +65,7 @@ body {
 }
 .card-hover:hover {
   transform: translateY(-4px);
-  box-shadow: 0 4px 12px var(--accent-glow);
-}
-
-/* Reduce motion for background geometry */
-@media (prefers-reduced-motion: reduce) {
-  .wire-circle,
-  .wire-square {
-    animation: none !important;
-  }
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.08);
 }
 
 /* Structural borders */
@@ -196,30 +110,4 @@ body {
 /* Accent glow utility */
 .accent-glow {
   box-shadow: 0 0 30px var(--accent-glow);
-}
-
-/* Mobile adjustments */
-@media (max-width: 640px) {
-  .wire-circle {
-    width: 50vw;
-    max-width: 200px;
-    top: 2%;
-    left: 2%;
-  }
-  .wire-circle::before {
-    inset: 10px;
-  }
-  .wire-circle::after {
-    left: -10px;
-    right: -10px;
-  }
-  .wire-square {
-    width: 30vw;
-    max-width: 120px;
-    bottom: 5%;
-    left: 5%;
-  }
-  .wire-square::before {
-    inset: -5px;
-  }
 }

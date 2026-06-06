@@ -1,4 +1,4 @@
-export const SECTIONS = ['about', 'blog', 'work', 'stack', 'contact'];
+export const SECTIONS = ['about', 'blog', 'work', 'contact'];
 
 export const SERVICES = [
   {

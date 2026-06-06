@@ -6,10 +6,10 @@ interface Star {
   x: number;
   y: number;
   size: number;
-  twinkleSpeed: number;
   twinklePhase: number;
   baseAlpha: number;
-  isStatic: boolean;
+  twinkleStrength: number;
+  freq: [number, number, number];
 }
 
 interface Planet {
@@ -53,24 +53,32 @@ export default function Starfield() {
       const stars: Star[] = [];
       const count = Math.floor((w * h) / 10000);
       for (let i = 0; i < count; i++) {
-        const brightness = Math.random();
-        let size: number, baseAlpha: number;
-        if (brightness < 0.7) {
+        const r = Math.random();
+        let size: number, baseAlpha: number, twinkleStrength: number;
+        if (r < 0.55) {
           size = Math.random() * 0.6 + 0.3;
           baseAlpha = Math.random() * 0.2 + 0.15;
-        } else if (brightness < 0.92) {
+          twinkleStrength = 0.3 + Math.random() * 0.4;
+        } else if (r < 0.85) {
           size = Math.random() * 0.8 + 0.6;
           baseAlpha = Math.random() * 0.3 + 0.35;
+          twinkleStrength = 0.5 + Math.random() * 0.5;
         } else {
           size = Math.random() * 1.2 + 1;
           baseAlpha = Math.random() * 0.3 + 0.7;
+          twinkleStrength = 0.7 + Math.random() * 0.3;
         }
+        const f1 = 0.3 + Math.random() * 0.8;
+        const f2 = 1.0 + Math.random() * 2.0;
+        const f3 = 3.0 + Math.random() * 5.0;
         stars.push({
           x: Math.random() * w,
           y: Math.random() * h,
-          size, twinkleSpeed: Math.random() * 1.5 + 0.3,
+          size,
           twinklePhase: Math.random() * Math.PI * 2,
-          baseAlpha, isStatic: Math.random() < 0.3,
+          baseAlpha,
+          twinkleStrength,
+          freq: [f1, f2, f3],
         });
       }
       return stars;
@@ -138,9 +146,14 @@ export default function Starfield() {
       // Stars
       for (const s of starsRef.current) {
         let a = s.baseAlpha;
-        if (!s.isStatic) {
-          a *= 0.7 + 0.3 * (0.5 + 0.5 * Math.sin(t * s.twinkleSpeed + s.twinklePhase));
-        }
+        // Multi-frequency twinkle for natural-looking flicker
+        const v = Math.sin(t * s.freq[0] + s.twinklePhase) * 0.5
+                + Math.sin(t * s.freq[1] + s.twinklePhase + 1.7) * 0.3
+                + Math.sin(t * s.freq[2] + s.twinklePhase + 3.1) * 0.2;
+        const raw = (v + 1) * 0.5;
+        // Asymmetric shaping: stars spend more time dim with occasional bright flashes
+        const shaped = Math.pow(raw, 2.0);
+        a *= 1 - s.twinkleStrength * 0.6 + s.twinkleStrength * 0.9 * shaped;
         if (a < 0.05) continue;
         ctx.fillStyle = `rgba(255, 255, 255, ${a})`;
         ctx.beginPath();
@@ -164,6 +177,7 @@ export default function Starfield() {
         }
       }
 
+      for (const p of planetsRef.current) {
         // Planet position
         const angle = t * p.speed + p.phase;
         const cosR = Math.cos(precession);

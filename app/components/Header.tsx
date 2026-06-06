@@ -27,7 +27,7 @@ export default function Header({ sections, activeSection, isScrolled, isMenuOpen
         backdropFilter: active ? 'blur(20px)' : 'none',
         borderRadius: active ? '1.25rem' : '0',
         padding: active ? '0.75rem 2rem' : '1rem 1.5rem',
-        boxShadow: active ? '0 0 30px var(--accent-glow), 0 10px 40px var(--header-shadow)' : 'none',
+        boxShadow: active ? '0 0 30px rgba(255, 255, 255, 0.06), 0 10px 40px var(--header-shadow)' : 'none',
         border: 'none',
         zIndex: 100,
         transition: 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)',

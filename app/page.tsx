@@ -55,8 +55,7 @@ export default function Home() {
       <InteractiveGrid />
       <div className="axis-x" />
       <div className="axis-y" />
-      <div className="wire-circle" />
-      <div className="wire-square" />
+
 
       <Header
         sections={SECTIONS}
@@ -179,52 +178,6 @@ export default function Home() {
                 </div>
               </a>
             ))}
-          </div>
-        </section>
-
-        {/* EXPERIENCE & STACK */}
-        <section id="stack" className="mb-20 md:mb-32 grid md:grid-cols-2 gap-12 md:gap-24 relative z-10 backdrop-blur-[2px]" style={{ backgroundColor: 'color-mix(in srgb, var(--bg) 40%, transparent)' }}>
-          <div>
-            <div className="flex items-center gap-4 mb-12">
-              <div className="w-8 h-px" style={{ backgroundColor: 'var(--border)' }} />
-              <h2 className="text-sm font-mono uppercase tracking-widest m-0" style={{ color: 'var(--fg-dim)' }}>Experience</h2>
-              <div className="flex-1 h-px" style={{ backgroundColor: 'var(--border)' }} />
-            </div>
-            <div className="space-y-8 md:space-y-12 border-grid-l pl-6 md:pl-8 relative">
-              <div className="crosshair crosshair-tl" />
-              <div className="crosshair crosshair-bl" />
-              {EXPERIENCE.map((exp, i) => (
-                <div key={i} className="relative">
-                  <div className="absolute w-2 h-2 -left-[25px] md:-left-[37px] top-2" style={{ border: '1px solid var(--accent)', backgroundColor: 'var(--bg)' }} />
-                  <span className="text-xs font-mono mb-2 block" style={{ color: 'var(--fg-dim)' }}>{exp.period}</span>
-                  <h3 className="text-lg font-bold mb-1">{exp.title}</h3>
-                  <p className="text-sm mb-3" style={{ color: 'var(--fg-muted)' }}>{exp.company}</p>
-                  <p className="text-sm leading-relaxed" style={{ color: 'var(--fg-muted)' }}>{exp.description}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div>
-            <div className="flex items-center gap-4 mb-12">
-              <div className="w-8 h-px" style={{ backgroundColor: 'var(--border)' }} />
-              <h2 className="text-sm font-mono uppercase tracking-widest m-0" style={{ color: 'var(--fg-dim)' }}>Technologies</h2>
-              <div className="flex-1 h-px" style={{ backgroundColor: 'var(--border)' }} />
-            </div>
-            <div className="flex flex-col gap-0 border-grid relative">
-              <div className="crosshair crosshair-tl" />
-              <div className="crosshair crosshair-tr" />
-              <div className="crosshair crosshair-bl" />
-              <div className="crosshair crosshair-br" />
-              {SKILLS.map((skill, i) => (
-                <div key={skill.name} className={`relative flex justify-between p-4 px-6 transition-colors ${i !== SKILLS.length - 1 ? 'border-grid-b' : ''}`}>
-                  {i !== SKILLS.length - 1 && <div className="crosshair crosshair-bl" />}
-                  {i !== SKILLS.length - 1 && <div className="crosshair crosshair-br" />}
-                  <span className="font-medium">{skill.name}</span>
-                  <span className="text-xs font-mono uppercase" style={{ color: 'var(--fg-dim)' }}>{skill.category}</span>
-                </div>
-              ))}
-            </div>
           </div>
         </section>
 

@@ -4,6 +4,8 @@ import { SECTIONS, PROJECTS, EXPERIENCE, SKILLS, SERVICES, POSTS } from './const
 import Header from './components/Header';
 import MobileMenu from './components/MobileMenu';
 import InteractiveGrid from './components/InteractiveGrid';
+import SectionHeader from './components/SectionHeader';
+import ScrollToTop from './components/ScrollToTop';
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 
@@ -73,7 +75,7 @@ export default function Home() {
         onClose={() => setIsMobileMenuOpen(false)}
       />
 
-      <main className="max-w-5xl mx-auto px-6 md:px-12 pt-28 md:pt-48 pb-24 md:pb-32">
+      <main id="main-content" className="max-w-5xl mx-auto px-6 md:px-12 pt-28 md:pt-48 pb-24 md:pb-32">
         {/* HERO */}
         <section id="about" className="min-h-[60vh] flex flex-col justify-center mb-32 relative z-10">
           <div className="border-grid-l pl-8 md:pl-12 py-4 relative">
@@ -102,11 +104,7 @@ export default function Home() {
 
         {/* BLOG */}
         <section id="blog" className="mb-20 md:mb-32 relative z-10 backdrop-blur-[2px]" style={{ backgroundColor: 'color-mix(in srgb, var(--bg) 40%, transparent)' }}>
-          <div className="flex items-center gap-4 mb-12">
-            <div className="w-12 h-px" style={{ backgroundColor: 'var(--border)' }} />
-            <h2 className="text-sm font-mono uppercase tracking-widest m-0" style={{ color: 'var(--fg-dim)' }}>Log / Guides</h2>
-            <div className="flex-1 h-px" style={{ backgroundColor: 'var(--border)' }} />
-          </div>
+          <SectionHeader title="Log / Guides" />
           <div className="space-y-0 border-grid relative">
             <div className="crosshair crosshair-tl" />
             <div className="crosshair crosshair-tr" />
@@ -130,11 +128,7 @@ export default function Home() {
 
         {/* SERVICES / WHAT I DO */}
         <section className="mb-20 md:mb-32 relative z-10 backdrop-blur-[2px]" style={{ backgroundColor: 'color-mix(in srgb, var(--bg) 40%, transparent)' }}>
-          <div className="flex items-center gap-4 mb-12">
-            <div className="w-12 h-px" style={{ backgroundColor: 'var(--border)' }} />
-            <h2 className="text-sm font-mono uppercase tracking-widest m-0" style={{ color: 'var(--fg-dim)' }}>What I Do</h2>
-            <div className="flex-1 h-px" style={{ backgroundColor: 'var(--border)' }} />
-          </div>
+          <SectionHeader title="What I Do" />
           <div className="grid md:grid-cols-3 gap-0 border-grid relative">
             <div className="crosshair crosshair-tl" />
             <div className="crosshair crosshair-tr" />
@@ -153,11 +147,7 @@ export default function Home() {
 
         {/* WORK / PROJECTS */}
         <section id="work" className="mb-20 md:mb-32 relative z-10 backdrop-blur-[2px]" style={{ backgroundColor: 'color-mix(in srgb, var(--bg) 40%, transparent)' }}>
-          <div className="flex items-center gap-4 mb-12">
-            <div className="w-12 h-px" style={{ backgroundColor: 'var(--border)' }} />
-            <h2 className="text-sm font-mono uppercase tracking-widest m-0" style={{ color: 'var(--fg-dim)' }}>Selected Work</h2>
-            <div className="flex-1 h-px" style={{ backgroundColor: 'var(--border)' }} />
-          </div>
+          <SectionHeader title="Selected Work" />
           <div className="space-y-0 border-grid relative">
             <div className="crosshair crosshair-tl" />
             <div className="crosshair crosshair-tr" />
@@ -229,6 +219,8 @@ export default function Home() {
           </footer>
         </section>
       </main>
+
+      <ScrollToTop onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} />
     </div>
   );
 }

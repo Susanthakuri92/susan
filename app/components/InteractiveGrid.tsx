@@ -165,8 +165,9 @@ export default function Starfield() {
       const cy = solarCyRef.current;
       const precession = t * 0.004 + (w < 768 ? -Math.PI / 4 : Math.PI / 5);
 
-      // Orbit rings (hidden on mobile to reduce clutter)
+      // Solar system — hidden on mobile to avoid congestion
       if (w >= 768) {
+        // Orbit rings
         ctx.font = '9px monospace';
         for (const p of planetsRef.current) {
           ctx.strokeStyle = `rgba(255, 255, 255, 0.08)`;
@@ -175,97 +176,95 @@ export default function Starfield() {
           ctx.ellipse(cx, cy, p.orbitRx, p.orbitRy, precession, 0, Math.PI * 2);
           ctx.stroke();
         }
-      }
 
-      for (const p of planetsRef.current) {
-        // Planet position
-        const angle = t * p.speed + p.phase;
-        const cosR = Math.cos(precession);
-        const sinR = Math.sin(precession);
-        const px = cx + p.orbitRx * Math.cos(angle) * cosR - p.orbitRy * Math.sin(angle) * sinR;
-        const py = cy + p.orbitRx * Math.cos(angle) * sinR + p.orbitRy * Math.sin(angle) * cosR;
+        for (const p of planetsRef.current) {
+          // Planet position
+          const angle = t * p.speed + p.phase;
+          const cosR = Math.cos(precession);
+          const sinR = Math.sin(precession);
+          const px = cx + p.orbitRx * Math.cos(angle) * cosR - p.orbitRy * Math.sin(angle) * sinR;
+          const py = cy + p.orbitRx * Math.cos(angle) * sinR + p.orbitRy * Math.sin(angle) * cosR;
 
-        // Soft ambient glow
-        const glowR = Math.max(p.size * 2, 6);
-        const agrad = ctx.createRadialGradient(px, py, 0, px, py, glowR);
-        agrad.addColorStop(0, `rgba(255, 255, 255, 0.08)`);
-        agrad.addColorStop(1, `rgba(255, 255, 255, 0)`);
-        ctx.fillStyle = agrad;
-        ctx.beginPath();
-        ctx.arc(px, py, glowR, 0, Math.PI * 2);
-        ctx.fill();
-
-        // Planet body
-        ctx.fillStyle = p.color;
-        ctx.beginPath();
-        ctx.arc(px, py, p.size, 0, Math.PI * 2);
-        ctx.fill();
-
-        // Planet highlight for 3D spherical look
-        const hGrad = ctx.createRadialGradient(
-          px - p.size * 0.3, py - p.size * 0.3, 0,
-          px, py, p.size
-        );
-        hGrad.addColorStop(0, 'rgba(255, 255, 255, 0.25)');
-        hGrad.addColorStop(0.4, 'rgba(255, 255, 255, 0.05)');
-        hGrad.addColorStop(1, 'rgba(0, 0, 0, 0.2)');
-        ctx.fillStyle = hGrad;
-        ctx.beginPath();
-        ctx.arc(px, py, p.size, 0, Math.PI * 2);
-        ctx.fill();
-
-        // Saturn ring
-        if (p.name === 'saturn') {
-          ctx.save();
-          ctx.strokeStyle = 'rgba(200, 180, 140, 0.5)';
-          ctx.lineWidth = 1.5;
+          // Soft ambient glow
+          const glowR = Math.max(p.size * 2, 6);
+          const agrad = ctx.createRadialGradient(px, py, 0, px, py, glowR);
+          agrad.addColorStop(0, `rgba(255, 255, 255, 0.08)`);
+          agrad.addColorStop(1, `rgba(255, 255, 255, 0)`);
+          ctx.fillStyle = agrad;
           ctx.beginPath();
-          ctx.ellipse(px, py, p.size * 2.2, p.size * 0.35, 0.3, 0, Math.PI * 2);
-          ctx.stroke();
-          ctx.strokeStyle = 'rgba(200, 180, 140, 0.25)';
-          ctx.lineWidth = 1;
+          ctx.arc(px, py, glowR, 0, Math.PI * 2);
+          ctx.fill();
+
+          // Planet body
+          ctx.fillStyle = p.color;
           ctx.beginPath();
-          ctx.ellipse(px, py, p.size * 2.6, p.size * 0.45, 0.3, 0, Math.PI * 2);
-          ctx.stroke();
-          ctx.restore();
+          ctx.arc(px, py, p.size, 0, Math.PI * 2);
+          ctx.fill();
+
+          // Planet highlight for 3D spherical look
+          const hGrad = ctx.createRadialGradient(
+            px - p.size * 0.3, py - p.size * 0.3, 0,
+            px, py, p.size
+          );
+          hGrad.addColorStop(0, 'rgba(255, 255, 255, 0.25)');
+          hGrad.addColorStop(0.4, 'rgba(255, 255, 255, 0.05)');
+          hGrad.addColorStop(1, 'rgba(0, 0, 0, 0.2)');
+          ctx.fillStyle = hGrad;
+          ctx.beginPath();
+          ctx.arc(px, py, p.size, 0, Math.PI * 2);
+          ctx.fill();
+
+          // Saturn ring
+          if (p.name === 'saturn') {
+            ctx.save();
+            ctx.strokeStyle = 'rgba(200, 180, 140, 0.5)';
+            ctx.lineWidth = 1.5;
+            ctx.beginPath();
+            ctx.ellipse(px, py, p.size * 2.2, p.size * 0.35, 0.3, 0, Math.PI * 2);
+            ctx.stroke();
+            ctx.strokeStyle = 'rgba(200, 180, 140, 0.25)';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.ellipse(px, py, p.size * 2.6, p.size * 0.45, 0.3, 0, Math.PI * 2);
+            ctx.stroke();
+            ctx.restore();
+          }
         }
 
+        // Sun - outer corona glow
+        const coronaGrad = ctx.createRadialGradient(cx, cy, 0, cx, cy, 80);
+        coronaGrad.addColorStop(0, 'rgba(255, 200, 130, 0.3)');
+        coronaGrad.addColorStop(0.3, 'rgba(255, 180, 100, 0.12)');
+        coronaGrad.addColorStop(0.6, 'rgba(255, 160, 80, 0.04)');
+        coronaGrad.addColorStop(1, 'rgba(255, 160, 80, 0)');
+        ctx.fillStyle = coronaGrad;
+        ctx.beginPath();
+        ctx.arc(cx, cy, 80, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Sun - inner glow
+        const innerGrad = ctx.createRadialGradient(cx, cy, 0, cx, cy, 40);
+        innerGrad.addColorStop(0, 'rgba(255, 220, 150, 0.8)');
+        innerGrad.addColorStop(0.4, 'rgba(255, 190, 110, 0.35)');
+        innerGrad.addColorStop(1, 'rgba(255, 170, 90, 0)');
+        ctx.fillStyle = innerGrad;
+        ctx.beginPath();
+        ctx.arc(cx, cy, 40, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Sun - core
+        const coreGrad = ctx.createRadialGradient(cx, cy, 0, cx, cy, 18);
+        coreGrad.addColorStop(0, 'rgba(255, 230, 190, 0.9)');
+        coreGrad.addColorStop(0.5, 'rgba(255, 210, 150, 0.7)');
+        coreGrad.addColorStop(1, 'rgba(255, 180, 100, 0.4)');
+        ctx.fillStyle = coreGrad;
+        ctx.beginPath();
+        ctx.arc(cx, cy, 18, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.beginPath();
+        ctx.arc(cx, cy, 18, 0, Math.PI * 2);
+        ctx.fill();
       }
-
-      // Sun - outer corona glow
-      const sunScale = w < 768 ? 0.5 : 1;
-      const coronaGrad = ctx.createRadialGradient(cx, cy, 0, cx, cy, 80 * sunScale);
-      coronaGrad.addColorStop(0, 'rgba(255, 200, 130, 0.3)');
-      coronaGrad.addColorStop(0.3, 'rgba(255, 180, 100, 0.12)');
-      coronaGrad.addColorStop(0.6, 'rgba(255, 160, 80, 0.04)');
-      coronaGrad.addColorStop(1, 'rgba(255, 160, 80, 0)');
-      ctx.fillStyle = coronaGrad;
-      ctx.beginPath();
-      ctx.arc(cx, cy, 80 * sunScale, 0, Math.PI * 2);
-      ctx.fill();
-
-      // Sun - inner glow
-      const innerGrad = ctx.createRadialGradient(cx, cy, 0, cx, cy, 40 * sunScale);
-      innerGrad.addColorStop(0, 'rgba(255, 220, 150, 0.8)');
-      innerGrad.addColorStop(0.4, 'rgba(255, 190, 110, 0.35)');
-      innerGrad.addColorStop(1, 'rgba(255, 170, 90, 0)');
-      ctx.fillStyle = innerGrad;
-      ctx.beginPath();
-      ctx.arc(cx, cy, 40 * sunScale, 0, Math.PI * 2);
-      ctx.fill();
-
-      // Sun - core
-      const coreGrad = ctx.createRadialGradient(cx, cy, 0, cx, cy, 18 * sunScale);
-      coreGrad.addColorStop(0, 'rgba(255, 230, 190, 0.9)');
-      coreGrad.addColorStop(0.5, 'rgba(255, 210, 150, 0.7)');
-      coreGrad.addColorStop(1, 'rgba(255, 180, 100, 0.4)');
-      ctx.fillStyle = coreGrad;
-      ctx.beginPath();
-      ctx.arc(cx, cy, 18 * sunScale, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.beginPath();
-      ctx.arc(cx, cy, 18 * sunScale, 0, Math.PI * 2);
-      ctx.fill();
 
       // Shooting stars
       shootingRef.current = shootingRef.current.filter(s => s.life < s.maxLife);

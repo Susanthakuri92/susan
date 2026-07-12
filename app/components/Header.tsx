@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import ThemeToggle from './ThemeToggle';
 
 interface HeaderProps {
   sections: string[];
@@ -51,6 +52,7 @@ export default function Header({ sections, activeSection, isScrolled, isMenuOpen
             onClick={() => onSectionClick(section)}
             className="text-[10px] uppercase tracking-[0.2em] transition-all relative py-2 group font-mono"
             style={{ color: activeSection === section ? 'var(--accent)' : 'var(--fg-muted)' }}
+            aria-current={activeSection === section ? 'true' : undefined}
           >
             {section === 'about' ? 'About Me' : section === 'blog' ? 'Blog/Guides' : section}
             <span className={`absolute bottom-0 left-0 h-[2px] transition-all duration-300 ${
@@ -59,6 +61,10 @@ export default function Header({ sections, activeSection, isScrolled, isMenuOpen
           </button>
         ))}
       </nav>
+
+      <div className="flex items-center gap-2">
+        <ThemeToggle />
+      </div>
 
       <div className="md:hidden flex items-center gap-3">
         <button
